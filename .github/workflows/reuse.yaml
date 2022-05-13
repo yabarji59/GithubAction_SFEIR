@@ -4,4 +4,4 @@ on:
  
 jobs:
   reusable_workflow_job:
-      uses: ./.github/workflow/ex4.yaml@main
+      uses: ./.github/workflows/ex4.yaml@main
