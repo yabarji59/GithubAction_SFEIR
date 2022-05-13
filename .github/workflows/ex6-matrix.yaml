@@ -3,7 +3,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  example_matrix:
+  run-npm-install:
+    needs: run-npm-install
     strategy:
       matrix:
         os: [ubuntu-latest, ubuntu-18.04]
@@ -13,11 +14,47 @@ jobs:
             node: 12
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node }}
-      - if: ${{ matrix.npm }}
-        run: npm install -g npm@${{ matrix.npm }}
-      - run: |
-          npm --version
-          npm test
+        - name: checkout
+          uses: actions/checkout@v2
+        - name : setup node
+          uses: actions/setup-node@v2
+          with:
+            node-version: ${{ matrix.version }}
+        - uses: actions/cache@v3
+          with:
+            path: ./node_modules
+            key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+            restore-keys: |
+              ${{ runner.os }}-node-
+        - name: run test
+          shell: bash
+          run: |
+            npm install
+
+  run-npm-test:
+    needs: run-npm-test
+    strategy:
+      matrix:
+        os: [ubuntu-latest, ubuntu-18.04]
+        node: [14, lts]
+        include:
+          - os: ubuntu-latest
+            node: 12
+    runs-on: ${{ matrix.os }}
+    steps:
+        - name: checkout
+          uses: actions/checkout@v2
+        - name : setup node
+          uses: actions/setup-node@v2
+          with:
+            node-version: ${{ matrix.version }}
+        - uses: actions/cache@v3
+          with:
+            path: ./node_modules
+            key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+            restore-keys: |
+              ${{ runner.os }}-node-
+        - name: run test
+          shell: bash
+          run: |
+            npm test
