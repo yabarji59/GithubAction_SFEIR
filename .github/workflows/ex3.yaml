@@ -5,18 +5,19 @@ on:
 jobs:
   run-npm-test:
     runs-on: ubuntu-latest
+
+    env:
+      NODE_VERSION: 14
+
     steps:
         - name: checkout
           uses: actions/checkout@v2
         - name : setup node
           uses: actions/setup-node@v2
           with:
-            node-version: 'lts/*'
-        - name: NODE_VERSION
-          run: echo '::set-output name=NODE_VERSION::14'
-          id: node_version
+            node-version: ${{env.NODE_VERSION}}
 
-        - name: Get color
+        - name: NODE_VERSION
           run: |
             node -v
-            echo "The actualy version of node is ${{ steps.node_version.outputs.NODE_VERSION }}" # This will output '14'ut 'green'
+            echo "The actualy version of node is ${{env.NODE_VERSION}}" # This will output '14'ut 'green'
