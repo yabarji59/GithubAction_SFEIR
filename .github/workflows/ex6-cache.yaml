@@ -16,8 +16,14 @@ jobs:
           shell: bash
           run: |
             npm install
+        - name: Cache multiple paths
+          uses: actions/cache@v3
+          with:
+            path: |
+              ~/cache/node_modules        
 
   run-npm-test:
+    needs: run-npm-install
     runs-on: ubuntu-latest
     steps:
         - name: checkout
