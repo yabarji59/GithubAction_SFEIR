@@ -3,5 +3,27 @@ on:
   workflow_dispatch:
                
 jobs:
-  runs-on: ubuntu-latest
+  job1:
+    runs-on: ubuntu-latest
     steps: 
+      - name: Checkout
+        uses: actions/checkout@v2.4.2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+      - name: npm install
+        run: |
+          ls
+          npm install
+  job2:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v2.4.2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+      - name: npm test
+        run: |
+          ls
+          npm test
