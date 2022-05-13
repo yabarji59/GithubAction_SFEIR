@@ -5,9 +5,7 @@ on:
 jobs:
   reusable_workflow_job:
     runs-on: ubuntu-latest
-    environment: production
     steps:
       - uses: ./.github/workflows/ex4
         with:
-          username: ${{ inputs.username }}
-          token: ${{ secrets.envPAT }}
+          node-version: 14
