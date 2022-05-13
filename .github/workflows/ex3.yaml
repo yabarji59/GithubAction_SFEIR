@@ -12,8 +12,11 @@ jobs:
           uses: actions/setup-node@v2
           with:
             node-version: 'lts/*'
-        - name: run test
-          shell: bash
+        - name: NODE_VERSION
+          run: echo '::set-output name=NODE_VERSION::14'
+          id: node_version
+
+        - name: Get color
           run: |
-            npm install
-            npm test
+            node -v
+            echo "The actualy version of node is ${{ steps.node_version.outputs.NODE_VERSION }}" # This will output '14'ut 'green'
