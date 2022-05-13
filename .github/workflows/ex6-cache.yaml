@@ -20,7 +20,8 @@ jobs:
           uses: actions/cache@v3
           with:
             path: |
-              ~/cache/node_modules        
+              node_modules
+            key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
   run-npm-test:
     needs: run-npm-install
