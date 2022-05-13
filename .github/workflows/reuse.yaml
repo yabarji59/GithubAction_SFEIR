@@ -1,4 +1,4 @@
-name: reusable workflow
+name: reusable workflow of ex4.yaml
 on: 
   workflow_dispatch: 
  
